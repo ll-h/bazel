@@ -78,7 +78,9 @@ public class VanillaJavaBuilder implements Closeable {
   private FileSystem getJarFileSystem(Path sourceJar) throws IOException {
     FileSystem fs = filesystems.get(sourceJar);
     if (fs == null) {
-      filesystems.put(sourceJar, fs = FileSystems.newFileSystem(sourceJar, null));
+      // used for disambiguation from newFileSystem(Path path, Map<String,?> env)
+      java.lang.ClassLoader nullClassLoader = null;
+      filesystems.put(sourceJar, fs = FileSystems.newFileSystem(sourceJar, nullClassLoader));
     }
     return fs;
   }
